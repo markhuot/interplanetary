@@ -79,6 +79,62 @@ app.listen(3000, function () {
 
 But that gave me errors that Node couldn't find a bunch of modules like `fs`. This is because Webpack assumes you're running in the browser, not in Node/SSR. So, I updated my Webpack config with `target: "node"` and the errors went away. Now, running `yarn webpack && node bundle.js` shows `Example app listening on port 3000!` in my console and navigating to http://localhost:3000 shows `hello world` in my browser!
 
+You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/c50e1e5bcb08b8cf04e2b110ab4fbeb6f08a50d4).
+
 ## Simplifying
 
-I'm still not using JSX or any of the ES6 things that can shorten down my code and make this a bit easier to maintain so, at this point, I took a step back and abstracted out my `Page` class into a separate `components/Home.jsx` file.
+I'm still not using JSX or any of the ES6 things that can shorten down my code and make this a bit easier to maintain so, it was time to bring in Babel. Babel was a `yarn add` away. But I also need the compilers for JSX and some of the ES6 niceties as well as the Webpack loader, so my final add was `yarn add babel-core babel-preset-env babel-plugin-transform-react-jsx babel-loader`. Then I'll need to adjust my `webpack.config.js` to use Babel by adding the following `module.rules`,
+
+```javascript
+{
+  "test": /\.jsx?$/,
+  "exclude": /(node_modules|bower_components)/,
+  "use": {
+    "loader": 'babel-loader',
+    "options": {
+      "presets": ["env"],
+      "plugins": ["transform-react-jsx"]
+    }
+  }
+}
+```
+
+At this point since I have Babel now I can move my `Page` out of `index.js` into its own `components/Home.jsx` file. This file got a lot shorter and prettier during the move,
+
+```jsx
+import React from 'react';
+
+export default class Home extends React.Component {
+  render() {
+    return <div>Hello World</div>;
+  }
+}
+```
+
+Lastly, I could update my `index.js` with some ES6 `import` statments, including my new `Home` class like so,
+
+```javascript
+import React from 'react';
+import ReactDomServer from 'react-dom/server';
+import Home from './components/Home.jsx';
+import express from 'express';
+
+const app = express();
+
+app.get('/', function (req, res) {
+  res.send(ReactDomServer.renderToStaticMarkup(<Home />));
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
+```
+
+JSX was weird for me at first, but once I accepted that I wasn't separating things vertically into HTML, CSS, and Javascript, but instead into unique (self contained) modules, things got easier for me.
+
+With all this out of the way I could re-run `yarn webpack && node bundle.js` and see the same `Hello World` in my browser.
+
+You can see the repository [at this point in time on GitHub]().
+
+## First components
+

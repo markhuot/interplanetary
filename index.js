@@ -1,16 +1,12 @@
-var React = require('react');
-var ReactDomServer = require('react-dom/server');
-const express = require('express');
+import React from 'react';
+import ReactDomServer from 'react-dom/server';
+import Home from './components/Home.jsx';
+import express from 'express';
+
 const app = express();
 
-class Page extends React.Component {
-  render() {
-    return React.createElement('div', {}, 'hello world');
-  }
-}
-
 app.get('/', function (req, res) {
-  res.send(ReactDomServer.renderToStaticMarkup(React.createElement(Page)));
+  res.send(ReactDomServer.renderToStaticMarkup(<Home />));
 });
 
 app.listen(3000, function () {
