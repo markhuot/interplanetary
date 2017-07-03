@@ -7,3 +7,7 @@
   margin: 0;
   padding: 0;
 }
+
+:global body {
+  font-family: sans-serif;
+}

@@ -1,0 +1,37 @@
+.container {
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 13px 18px rgba(0,0,0,0.2);
+}
+
+.links {
+  position: absolute;
+  top: 35px;
+  right: 80px;
+  font-family: "PT Mono Bold", monospace;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.links li {
+  display: inline;
+  list-style: none;
+  margin-left: 2em;
+}
+
+.links small {
+  color: #b7b7b7;
+  font-weight: normal;
+}
+
+.links a {
+  text-decoration: none;
+  color: black;
+}

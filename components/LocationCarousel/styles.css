@@ -1,0 +1,85 @@
+.container {
+  background: #1f1f1f;
+  color: #fff;
+  padding: 80px;
+}
+
+.bleeds {
+  padding-bottom: 160px;
+  margin-bottom: -80px;
+}
+
+.container > * + * {
+  margin-top: 30px;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.cta {
+  color: #fff;
+  text-decoration: none;
+  font-family: monospace;
+  color: #f93a55;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 24px;
+}
+
+.cards {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 30px;
+}
+
+.cards::-webkit-scrollbar-track {
+  background: #4c4c4c;
+}
+
+.cards::-webkit-scrollbar {
+  background: #4c4c4c;
+  height: 1px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+  background: #f93a55;
+}
+
+.card {
+  width: 100%;
+  max-width: 20vw;
+  position: relative;
+  overflow: hidden;
+  height: 0;
+  padding-bottom: 30%;
+  background-size: cover;
+  background-position: center center;
+  display: inline-block;
+  white-space: normal;
+}
+
+.card + .card {
+  margin-left: 15px;
+}
+
+.content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 32px;
+  padding: 18px 25px;
+}
+
+.small {
+  color: #f93a55;
+  text-transform: uppercase;
+  display: block;
+  font-size: 13px;
+  font-family: monospace;
+}

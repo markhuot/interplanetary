@@ -374,7 +374,7 @@ Now, I've got a framework to render out CSS so I'm ready to start styling some o
 
 You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/fc6e664e97767b77706dfbbc10d7330533399238).
 
-## Styling
+## Fleshing it out
 
 First up I needed a way to reload Webpack without stopping and starting the server every time. There are a bunch of ways to do this but I find the easiest way is to use `yarn webpack -- --watch`. Couple that with `yarn nodemon bundle.js` and you've got a basic "hot module" system (without some of the added complexity). I abstracted this out into a `yarn dev` script for my own sanity.
 
@@ -415,3 +415,16 @@ And in my CSS I have,
 ```
 
 Again, this is all about portability. The CSS only cares where the image is in reference to itself. You can later require this file, move this file, it doesn't matter because it's your buildstep that is responsible for making the image servable.
+
+You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/3c0b971e85c9ef59e50ce87574d63e32a838bd4e).
+
+## The actual work...
+
+Next I went through and styled many of the components. This took the most time, but was relatively straightforward CSS work. Nothing _too_ tricky here. There's definitely a lot more I can do, too. Animations, better responsive styling, and image optimization are all still on the list.
+
+## Taking it further
+
+Up next I'd like to,
+
+1. Load in some of the data via GraphQL
+2. Wire up the contact form to use front-end React, in tandem with the back-end React I'm already writing

@@ -1,0 +1,32 @@
+.container {
+  background: #f93a55;
+  margin: 0 80px;
+  padding: 80px;
+}
+
+.bleeds {
+  padding-bottom: 120px;
+  margin-bottom: -40px;
+}
+
+.container a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.title {
+  padding-left: 10%;
+  width: 40%;
+  float: left;
+  font-size: 24px;
+}
+
+.list {
+  overflow: hidden;
+}
+
+.list li + li {
+  margin-top: 50px;
+  border-top: 1px solid #e0344c;
+  padding-top: 50px;
+}
