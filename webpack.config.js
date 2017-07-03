@@ -21,8 +21,18 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [ 'isomorphic-style-loader', 'css-loader' ]
-      }
+        use: [ 'isomorphic-style-loader', 'css-loader?modules' ]
+      },
+      {
+        test: /\.png$/,
+        use: {
+          "loader": "file-loader",
+          "query": {
+            "name": "./public/images/[hash].[ext]",
+            "publicPath": (url) => url.replace('./public', ''),
+          }
+        }
+      },
     ]
   }
 };

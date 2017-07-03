@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDomServer from 'react-dom/server';
-import Home from './components/Home.jsx';
+import Home from './components/Home/Home.jsx';
 import express from 'express';
-import Styled from './components/Styled.jsx';
+import Styled from './components/Styled/Styled.jsx';
 
 const app = express();
+
+app.use(express.static('public'));
 
 app.get('/', function (req, res) {
   let css = new Set();

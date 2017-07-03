@@ -371,3 +371,47 @@ export default class Home extends React.Component {
 ```
 
 Now, I've got a framework to render out CSS so I'm ready to start styling some of these components.
+
+You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/fc6e664e97767b77706dfbbc10d7330533399238).
+
+## Styling
+
+First up I needed a way to reload Webpack without stopping and starting the server every time. There are a bunch of ways to do this but I find the easiest way is to use `yarn webpack -- --watch`. Couple that with `yarn nodemon bundle.js` and you've got a basic "hot module" system (without some of the added complexity). I abstracted this out into a `yarn dev` script for my own sanity.
+
+Next, I cut out the background image of the space shuttle. Now, I could place this in the `components` folder, right next to everything else, but by now my `components` folder is getting a bit heavy so I refactored everything into their own folders. My Hero is now in its own folder and my background image ended up in `./components/Hero/background.png`. This makes each module it's own little reusable folder of assets. The HTML, CSS, Javascript, and images are all co-located within a single folder. If I need to use a Hero on two projects I can just drag and drop the entire folder over and I'm done. In the future I could even put each of these folders on NPM for myself to simply `import` into future projects. I won't worry about that today, but it's nice to know it's an option.
+
+One oddity to take note of when using Webpack's `file-loader` to bring in images. When the image is referenced in the CSS, `file-loader` can take it and move it somewhere else. This is helpful, because it can move it into a `public` folder that Express now handles. I chose to take this route and wired up `file-loader` like so,
+
+```js
+{
+  test: /\.png$/,
+  use: {
+    "loader": "file-loader",
+    "query": {
+      "name": "./public/images/[hash].[ext]",
+      "publicPath": (url) => url.replace('./public', ''),
+    }
+  }
+}
+```
+
+Waht this is doing is moving any referenced image into `./public/images/` and then rewriting the URL in the browser to be root-relative at `/images`. With all this in place I now have a directory structure like this,
+
+```
+components
+-- Hero
+---- Hero.jsx
+---- Hero.css
+---- background.png
+```
+
+And in my CSS I have,
+
+```css
+.hero {
+  background: url('./background.png') no-repeat center center;
+  background-size: cover;
+}
+```
+
+Again, this is all about portability. The CSS only cares where the image is in reference to itself. You can later require this file, move this file, it doesn't matter because it's your buildstep that is responsible for making the image servable.

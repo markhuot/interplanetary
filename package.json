@@ -9,8 +9,10 @@
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.5.2",
+    "concurrently": "^3.5.0",
     "css-loader": "^0.28.4",
     "express": "^4.15.3",
+    "file-loader": "^0.11.2",
     "isomorphic-style-loader": "^2.0.0",
     "nodemon": "^1.11.0",
     "prop-types": "^15.5.10",
@@ -18,5 +20,8 @@
     "react-dom": "^15.6.1",
     "react-router": "^4.1.1",
     "webpack": "^3.0.0"
+  },
+  "scripts": {
+    "dev": "concurrently \"webpack --watch\" \"nodemon --watch bundle.js bundle.js\""
   }
 }
