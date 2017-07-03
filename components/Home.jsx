@@ -4,8 +4,15 @@ import LocationCarousel from './LocationCarousel.jsx';
 import ListBox from './ListBox.jsx';
 import PriceTable from './PriceTable.jsx';
 import Footer from './Footer.jsx';
+import PropTypes from 'prop-types';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
+  getChildContext() {
+    return {
+      insertCss: this.props.insertCss
+    };
+  }
+
   render() {
     return <div>
       <Hero />
@@ -16,3 +23,9 @@ export default class Home extends React.Component {
     </div>;
   }
 }
+
+Home.childContextTypes = {
+  "insertCss": PropTypes.func,
+};
+
+export default Home;

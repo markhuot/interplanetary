@@ -6,7 +6,21 @@ import express from 'express';
 const app = express();
 
 app.get('/', function (req, res) {
-  res.send(ReactDomServer.renderToStaticMarkup(<Home />));
+  let css = new Set();
+
+  function insertCss(...styles) {
+    styles.forEach(function (style) {
+      css.add(style._getCss());
+    });
+  }
+
+  let body = ReactDomServer.renderToStaticMarkup(<Home insertCss={insertCss} />);
+  let html = `
+    <style>${[...css].join('')}</style>
+    ${body}
+  `;
+
+  res.send(html);
 });
 
 app.listen(3000, function () {

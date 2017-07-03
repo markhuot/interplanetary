@@ -18,6 +18,10 @@ module.exports = {
             "plugins": ["transform-react-jsx"]
           }
         }
+      },
+      {
+        test: /\.css$/,
+        use: [ 'isomorphic-style-loader', 'css-loader' ]
       }
     ]
   }

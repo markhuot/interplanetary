@@ -200,6 +200,105 @@ export default class Home extends React.Component {
 }
 ```
 
-You can see the repository [at this point in time on GitHub]().
+You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/b453e7c4346b920417bd42a1ae362c3548b6267f).
 
 ## Styling
+
+Next up was writing some CSS for the styling of this thing. I wanted to start with the hero first, but the logic would have been the same regardless of the component. Personally, I'm a big fan of the abstraction that CSS Modules provide. I understand the downsides of it and how it removes the power of CSS's cascade, however, I'll gladly trade the global cascade for a more maintainable local cascade, per-module. To dive in I started by requiring the basic implementation of CSS Modules inside `css-loader` with `yarn add css-loader isomorphic-style-loader` (Note: I needed `isomorphic-style-loader` because the default `style-loader` does not work for server side rendering).
+
+I then needed to update my `webpack.config.js` with this additional rule,
+
+```javascript
+{
+  test: /\.css$/,
+  use: [ 'isomorphic-style-loader', 'css-loader' ]
+}
+```
+
+With that, I could create `Hero.css` and import that into the corresponding `.jsx` file, like so:
+
+```javascript
+import React from 'react';
+import s from './Hero.css';
+
+export default class Hero extends React.Component {
+  render() {
+    // ...
+  }
+}
+```
+
+Again, running `yarn webpack && node bundle.js` worked great and showed me the HTML, but no styles yet. That's because the the CSS is actually imported into the `s` variable, above, but never pass anywhere. One of a few things needs to happen at this point:
+
+1. We need to render the CSS as inline styles, yay for network performance, boo for dom parsing/layout
+2. We need to extract the CSS from the javascript and generate a static CSS file. This'll work but seems a bit dated to me.
+3. Ideally, we could pass the CSS from each module _up_ the tree and fill in a `style` tag with only the necessary styles.
+
+I chose to try the third approach. At the component level this is easy to implement. The idea is that whenver your component triggers the `componentWillMount` event, pass the necessary CSS up the tree to some parent to render. And whenever your component triggers `componentWillUnmount` you remove the CSS from that parent. At a basic level it would look like this,
+
+```jsx
+import s from './Hero.css';
+
+class Hero extends React.Component {
+  componentWillMount() {
+    this.removeCss = this.context.insertCss(s);
+  }
+
+  componentWillUnmount() {
+    setTimeout(this.removeCss, 0);
+  }
+
+  // ...
+```
+
+The trick is "the parent" part of it. Luckily React handles this for us quite nicely with the `context` variable. Anything on `context` will travel down to any child compoents from the component it is first defined on. So, to manage this we need some parent component to define an `insertCss` `context` method that all our children can interact with. We can use our `Home.jsx` component to define this. I'll do it like so, for now,
+
+```jsx
+class Home extends React.Component {
+  getChildContext() {
+    return {
+      insertCss: this.props.insertCss
+    };
+  }
+
+  render() {
+    return <div>
+      <Hero />
+      <LocationCarousel />
+      <ListBox />
+      <PriceTable />
+      <Footer />
+    </div>;
+  }
+}
+
+Home.childContextTypes = {
+  "insertCss": PropTypes.func,
+};
+
+export default Home;
+```
+
+What this allows me to do is pass `insertCss` _in to_ my home Component so that my styles can be managed entirley outside the React system. This would happen in `index.js`, like so:
+
+```jsx
+app.get('/', function (req, res) {
+  let css = new Set();
+
+  function insertCss(...styles) {
+    styles.forEach(function (style) {
+      css.add(style._getCss());
+    });
+  }
+
+  let body = ReactDomServer.renderToStaticMarkup(<Home insertCss={insertCss} />);
+  let html = `
+    <style>${[...css].join('')}</style>
+    ${body}
+  `;
+
+  res.send(html);
+});
+```
+
+And this works! It's magical that now my CSS is now tightly tied to the HTML it requires. If one changes it's easy to audit the other and make any necessary adjustments. What I like most about this approach is that it allows me to write vanilla CSS the way it is supposed to be written with `@media` queries and all.
