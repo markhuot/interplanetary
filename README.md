@@ -134,7 +134,72 @@ JSX was weird for me at first, but once I accepted that I wasn't separating thin
 
 With all this out of the way I could re-run `yarn webpack && node bundle.js` and see the same `Hello World` in my browser.
 
-You can see the repository [at this point in time on GitHub]().
+You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/9b24cbe92f7aa0ec615d0dba6292d950cc192022).
 
 ## First components
 
+Things are _sort of_ working at this point. So, diving right in to the page I decied to work on the `components/Hero.jsx` component. This would be the space shuttle text. It's mostly just HTML and looks like this,
+
+```jsx
+import React from 'react';
+
+export default class Hero extends React.Component {
+  render() {
+    return <div>
+      <h1>When this world just isn&rsquo;t enough.</h1>
+      <h2>Take your adventures interplanetary</h2>
+      <p><a href="#">Reserve your spot</a></p>
+    </div>;
+  }
+}
+```
+
+This file/class then gets called into our `Home.jsx` like so,
+
+```jsx
+import React from 'react';
+import Hero from './Hero.jsx';
+
+export default class Home extends React.Component {
+  render() {
+    return <div>
+      <Hero />
+    </div>;
+  }
+}
+```
+
+This gave me the exact HTML I needed, so I expanded this out to all of the components on the page. At the end I had the following,
+
+```shell
+$ ls components/
+ContactForm.jsx		Footer.jsx		Home.jsx		LocationCarousel.jsx	PriceTable.jsx
+ContactInfo.jsx		Hero.jsx		ListBox.jsx		Navigation.jsx
+```
+
+My `Home.jsx` also looked like this,
+
+```jsx
+import React from 'react';
+import Hero from './Hero.jsx';
+import LocationCarousel from './LocationCarousel.jsx';
+import ListBox from './ListBox.jsx';
+import PriceTable from './PriceTable.jsx';
+import Footer from './Footer.jsx';
+
+export default class Home extends React.Component {
+  render() {
+    return <div>
+      <Hero />
+      <LocationCarousel />
+      <ListBox />
+      <PriceTable />
+      <Footer />
+    </div>;
+  }
+}
+```
+
+You can see the repository [at this point in time on GitHub]().
+
+## Styling
