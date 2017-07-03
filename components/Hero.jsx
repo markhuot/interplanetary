@@ -1,16 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Hero.css';
 
 class Hero extends React.Component {
-  componentWillMount() {
-    this.removeCss = this.context.insertCss(s);
-  }
-
-  componentWillUnmount() {
-    setTimeout(this.removeCss, 0);
-  }
-
   render() {
     return <div>
       <h1>When this world just isn&rsquo;t enough.</h1>
@@ -20,8 +12,4 @@ class Hero extends React.Component {
   }
 }
 
-Hero.contextTypes = {
-  insertCss: PropTypes.func,
-};
-
-export default Hero;
+export default withStyles(s)(Hero);

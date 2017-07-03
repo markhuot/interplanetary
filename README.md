@@ -302,3 +302,72 @@ app.get('/', function (req, res) {
 ```
 
 And this works! It's magical that now my CSS is now tightly tied to the HTML it requires. If one changes it's easy to audit the other and make any necessary adjustments. What I like most about this approach is that it allows me to write vanilla CSS the way it is supposed to be written with `@media` queries and all.
+
+You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/1e9615ae4df8c3c11fea1a0de3fcb435f6ddc366).
+
+## Easier styles
+
+Of course, there's always a better way. And `isomorphic-style-loader`, which we're already using, provides it. React has, what they refer to as "Higher Order Components" (HOC) which take an existing component and "wrap" it with additional functionality. Using the `withStyles` HOC, I can wrap my `Hero` class and remove the event listners, because they're handled for me in the HOC (out of sight). Now my `Hero.jsx` file looks like this,
+
+```jsx
+import React from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import s from './Hero.css';
+
+class Hero extends React.Component {
+  render() {
+    return <div>
+      <h1>When this world just isn&rsquo;t enough.</h1>
+      <h2>Take your adventures interplanetary</h2>
+      <p><a href="#">Reserve your spot</a></p>
+    </div>;
+  }
+}
+
+export default withStyles(s)(Hero);
+```
+
+The magic there is that `withStyles` has its own listeners that call `insertCss` for you. It's some magic convention, for sure, but I've found that most of React is magic convention so I'm becoming okay with it.
+
+Things are looking much better now. Next up I want to clean up all that `context` mucking I did in `index.js` and `Home.jsx`. To do so we can create our own HOC to handle all the CSS styling I had shoved in to `Home.jsx`. I created a new component called `Styled.jsx` that does this for me,
+
+```jsx
+import React from 'react';
+import PropTypes from 'prop-types';
+
+class Styled extends React.Component {
+  getChildContext() {
+    return {
+      insertCss: this.props.insertCss
+    };
+  }
+
+  render() {
+    return this.props.children;
+  }
+}
+
+Styled.childContextTypes = {
+  "insertCss": PropTypes.func,
+};
+
+export default Styled;
+```
+
+With this, my `Home.jsx `returns to the shorter,
+
+```jsx
+export default class Home extends React.Component {
+  render() {
+    return <div>
+      <Hero />
+      <LocationCarousel />
+      <ListBox />
+      <PriceTable />
+      <Footer />
+    </div>;
+  }
+}
+```
+
+Now, I've got a framework to render out CSS so I'm ready to start styling some of these components.

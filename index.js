@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDomServer from 'react-dom/server';
 import Home from './components/Home.jsx';
 import express from 'express';
+import Styled from './components/Styled.jsx';
 
 const app = express();
 
@@ -14,7 +15,12 @@ app.get('/', function (req, res) {
     });
   }
 
-  let body = ReactDomServer.renderToStaticMarkup(<Home insertCss={insertCss} />);
+  let body = ReactDomServer.renderToStaticMarkup(
+    <Styled insertCss={insertCss}>
+      <Home />
+    </Styled>
+  );
+
   let html = `
     <style>${[...css].join('')}</style>
     ${body}
