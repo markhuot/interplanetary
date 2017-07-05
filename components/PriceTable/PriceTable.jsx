@@ -1,8 +1,8 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './styles.css';
-import Container from '../Container/Container.jsx';
-import Button from '../Button/Button.jsx';
+import Container from 'Component/Container';
+import Button from 'Component/Button';
 
 class PriceTable extends React.Component {
   render() {

@@ -422,7 +422,7 @@ You can see the repository [at this point in time on GitHub](https://github.com/
 
 Next I went through and styled many of the components. This took the most time, but was relatively straightforward CSS work. Nothing _too_ tricky here. There's definitely a lot more I can do, too. Animations, better responsive styling, and image optimization are all still on the list.
 
-
+You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/commit/5f7e5505c7c1fe643aa034bdaf01ad838731edc1).
 
 ## Cleaner component names
 
@@ -433,7 +433,7 @@ With the current setup whenever I refer to a module I have to path directly to i
   "alias": {
     "Component": path.resolve(__dirname, 'components'),
   }
-},
+}
 ```
 
 With that in place I can refer to my components from anywhere, regardless of how deep they are. My import statement now looks like this,

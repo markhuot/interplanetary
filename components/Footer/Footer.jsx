@@ -1,7 +1,7 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import ContactInfo from '../ContactInfo/ContactInfo.jsx';
-import ContactForm from '../ContactForm/ContactForm.jsx';
+import ContactInfo from 'Component/ContactInfo';
+import ContactForm from 'Component/ContactForm';
 import s from './styles.css';
 
 class Footer extends React.Component {

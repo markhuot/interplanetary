@@ -1,11 +1,13 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Navigation from '../Navigation/Navigation.jsx';
-import Hero from '../Hero/Hero.jsx';
-import LocationCarousel from '../LocationCarousel/LocationCarousel.jsx';
-import ListBox from '../ListBox/ListBox.jsx';
-import PriceTable from '../PriceTable/PriceTable.jsx';
-import Footer from '../Footer/Footer.jsx';
+
+import Navigation from 'Component/Navigation';
+import Hero from 'Component/Hero';
+import LocationCarousel from 'Component/LocationCarousel';
+import ListBox from 'Component/ListBox';
+import PriceTable from 'Component/PriceTable';
+import Footer from 'Component/Footer';
+
 import s from './Home.css';
 
 class Home extends React.Component {

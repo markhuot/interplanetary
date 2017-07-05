@@ -1,7 +1,6 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Hero.css';
-import spacing from './Spacing.css';
 
 class Hero extends React.Component {
   render() {
