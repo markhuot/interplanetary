@@ -32,6 +32,11 @@
   left: 50%;
   top: 33%;
   color: #fff;
+  padding-right: 100px;
+}
+
+.line1, .line2 {
+  font-size: 32px;
 }
 
 .line1 {

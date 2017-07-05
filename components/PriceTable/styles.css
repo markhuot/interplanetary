@@ -1,15 +1,19 @@
 .table {
-  border-collapse: collapse;
   table-layout: fixed;
+  border-spacing: 0;
+  color: #1f1f1f;
 }
 
 .table th,
 .table td {
   padding: 30px;
+  border: none;
 }
 
 .table td {
   text-align: center;
+  font-size: 12px;
+  font-family: monospace;
 }
 
 .table thead th {
@@ -34,10 +38,40 @@
   background-color: #f6f6f6;
 }
 
+.table tr:nth-child(odd) > *:nth-child(1) {
+  border-right: 1px solid #dddddd;
+}
+
+.table tr:nth-child(even) > *:nth-child(1) {
+  border-right: 1px solid #dddddd;
+}
+
+.table tr:nth-child(odd) > *:nth-child(2) {
+  border-left: 5px solid #eeeeee;
+}
+
+.table tr:nth-child(even) > *:nth-child(2) {
+  border-left: 5px solid #f7f7f7;
+}
+
+.table tr > *:nth-child(5) {
+  border-left: 1px solid #dddddd;
+}
+
 .table tbody tr td:nth-child(3) {
+  color: #fff;
+}
+
+.table tr:nth-child(even) > *:nth-child(3) {
   background-color: #f93a55;
 }
 
-.table tbody tr:nth-child(odd) td:nth-child(3) {
+.table tr:nth-child(odd) > *:nth-child(3) {
   background-color: #f03852;
+}
+
+.table th.mostPopular {
+  background: black;
+  color: #fff;
+  font-family: monospace;
 }

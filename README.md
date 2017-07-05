@@ -422,6 +422,45 @@ You can see the repository [at this point in time on GitHub](https://github.com/
 
 Next I went through and styled many of the components. This took the most time, but was relatively straightforward CSS work. Nothing _too_ tricky here. There's definitely a lot more I can do, too. Animations, better responsive styling, and image optimization are all still on the list.
 
+
+
+## Cleaner component names
+
+With the current setup whenever I refer to a module I have to path directly to it through a mess of `../../` directories. It's gross, and could probably be cleaner. For example, if I'm working on `components/Hero/Hero.jsx` and I want to refer to a `Button` I need to path with `../Button/Button.jsx` and that's just _too_ much typing. So, I usually like to fix this with Webpack by adding an `alias` for my `components/` folder. This looks like this,
+
+```javascript
+"resolve": {
+  "alias": {
+    "Component": path.resolve(__dirname, 'components'),
+  }
+},
+```
+
+With that in place I can refer to my components from anywhere, regardless of how deep they are. My import statement now looks like this,
+
+```javascript
+import Button from 'Component/Button/Button.jsx'
+```
+
+But even that could be cleaned up. There's no need to have to specify `Button.jsx`. What if I stop using `.jsx` and want to write Vanilla JS… So, if I add a `package.json` to my `Button` component I can specify a `main` file. That is the file that will be loaded when someone tries to require the component's parent directory. It looks like this,
+
+```javascript
+{
+  "name": "Container",
+  "version": "1.0.0",
+  "main": "Container.jsx",
+  "license": "MIT"
+}
+```
+
+With that in place I can now call the following from anywhere,
+
+```javascript
+import Button from 'Component/Button'
+```
+
+With that in place I'm only a few steps away from pushing this component to a package manager and requiring it directly out of my `node_modules` folder.
+
 ## Taking it further
 
 Up next I'd like to,
