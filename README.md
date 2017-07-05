@@ -422,7 +422,7 @@ You can see the repository [at this point in time on GitHub](https://github.com/
 
 Next I went through and styled many of the components. This took the most time, but was relatively straightforward CSS work. Nothing _too_ tricky here. There's definitely a lot more I can do, too. Animations, better responsive styling, and image optimization are all still on the list.
 
-You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/commit/5f7e5505c7c1fe643aa034bdaf01ad838731edc1).
+You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/5f7e5505c7c1fe643aa034bdaf01ad838731edc1).
 
 ## Cleaner component names
 
@@ -459,7 +459,9 @@ With that in place I can now call the following from anywhere,
 import Button from 'Component/Button'
 ```
 
-With that in place I'm only a few steps away from pushing this component to a package manager and requiring it directly out of my `node_modules` folder.
+Best of all, I'm only a few steps away from pushing this component to a package manager and requiring it directly out of my `node_modules` folder.
+
+You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/89026258fc92b0b90e4c8c069f8ad4fe78f27bb1).
 
 ## Taking it further
 
