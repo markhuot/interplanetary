@@ -487,6 +487,8 @@ function insertCss(...styles) {
 
 With `@import` rules de-duped we can now safely explore some features of PostCSS like media query short hands or compiled variables, for wider browser support.
 
+You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/2c2559a90f7c959297b0be5b07c032ecb661e15b).
+
 ## Taking it further
 
 Up next I'd like to,
