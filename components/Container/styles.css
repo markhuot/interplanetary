@@ -1,4 +1,5 @@
 .container {
   max-width: 1440px;
   margin: 0 80px;
+  overflow: hidden;
 }

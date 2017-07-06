@@ -1,3 +1,5 @@
+@import 'Component/Styles/variables.css';
+
 .container {
   padding-bottom: 59.25% /*1600x948*/;
   position: relative;

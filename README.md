@@ -463,6 +463,30 @@ Best of all, I'm only a few steps away from pushing this component to a package 
 
 You can see the repository [at this point in time on GitHub](https://github.com/markhuot/interplanetary/tree/89026258fc92b0b90e4c8c069f8ad4fe78f27bb1).
 
+## Media Queries
+
+So far my CSS has been pretty basic. Traditionally, with client-side rendering you would lean on `style-loader` to handle a bunch of things for you, such as inserting and removing styles dynamically from the page. Because we're rendering the page server-side, though, we don't get some of those benefits. The biggest benefit we're missing out on is `style-loader`'s ability to de-dup multiple inlined `@import` rules. So, to get around this we need to build that logic into our `index.js`, where we collect the component styles.
+
+The updates require us to keep track of the `moduleId` of each loaded style sheet. Luckily `css-loader` and `isomorphic-style-loader` keep all that handy for us so we just need to keep a running tally of included modules each time `insertCss` is called. My `index.js` now includes this,
+
+```javascript
+let css = new Set();
+let inserted = {};
+
+function insertCss(...styles) {
+  styles.forEach(function (style) {
+    const [[moduleId, _, __], ___, ____] = style._getContent();
+
+    if (!inserted[moduleId]) {
+      css.add(style._getCss());
+      inserted[moduleId] = true;
+    }
+  });
+}
+```
+
+With `@import` rules de-duped we can now safely explore some features of PostCSS like media query short hands or compiled variables, for wider browser support.
+
 ## Taking it further
 
 Up next I'd like to,

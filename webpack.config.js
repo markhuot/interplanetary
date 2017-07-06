@@ -26,7 +26,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [ 'isomorphic-style-loader', 'css-loader?modules' ]
+        use: [ 'isomorphic-style-loader', 'css-loader?modules&importLoaders=2', 'postcss-loader' ]
       },
       {
         test: /\.png$/,

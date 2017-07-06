@@ -10,10 +10,16 @@ app.use(express.static('public'));
 
 app.get('/', function (req, res) {
   let css = new Set();
+  let inserted = {};
 
   function insertCss(...styles) {
     styles.forEach(function (style) {
-      css.add(style._getCss());
+      const [[moduleId, _, __], ___, ____] = style._getContent();
+
+      if (!inserted[moduleId]) {
+        css.add(style._getCss());
+        inserted[moduleId] = true;
+      }
     });
   }
 
@@ -23,12 +29,7 @@ app.get('/', function (req, res) {
     </Styled>
   );
 
-  let html = `
-    <style>${[...css].join('')}</style>
-    ${body}
-  `;
-
-  res.send(html);
+  res.send(`<style>${[...css].join('')}</style>${body}`);
 });
 
 app.listen(3000, function () {
